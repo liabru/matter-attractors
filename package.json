@@ -1,0 +1,46 @@
+{
+  "name": "matter-plugin-boilerplate",
+  "description": "A plugin boilerplate for matter.js",
+  "version": "0.1.0",
+  "main": "build/matter-plugin-boilerplate.js",
+  "license": "MIT",
+  "homepage": "https://github.com/liabru/matter-plugin-boilerplate",
+  "author": "Liam Brummitt <liam@brm.io> (http://brm.io/)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liabru/matter-plugin-boilerplate.git"
+  },
+  "keywords": [
+    "matter-js",
+    "plugin",
+    "physics",
+    "boilerplate"
+  ],
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server --content-base docs/",
+    "test": "mocha test",
+    "lint": "eslint *.js test/*.js",
+    "doc": "markdox *.js -o API.md",
+    "release": "npm version minor -m 'release %s' && npm publish",
+    "release-patch": "npm version patch -m 'release %s' && npm publish",
+    "preversion": "npm run lint",
+    "version": "npm run doc && git add -A build docs API.md",
+    "postversion": "npm run build && git push && git push --tags"
+  },
+  "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "case": "^1.4.2",
+    "chai": "^3.5.0",
+    "eslint": "^3.14.1",
+    "markdox": "^0.1.10",
+    "matter-js": "^0.12.0",
+    "matter-tools": "^0.10.0",
+    "mocha": "^3.2.0",
+    "replace-in-file": "^2.2.2",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^1.16.3"
+  }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="/demo/matter.js"></script>
+    <script src="/demo/matter-tools.demo.js"></script>
+    <script src="/demo/bundle.js"></script>
+    <script src="/examples/basic.js"></script>
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var pluginName = 'matter-plugin-boilerplate'; // PLUGIN_NAME
+      var repoUrl = 'https://github.com/liabru/matter-plugin-boilerplate'; // PLUGIN_REPO_URL
+
+      document.title = pluginName + ' demo';
+      
+      MatterTools.Demo.create({
+        preventZoom: true,
+        resetOnOrientation: true,
+        toolbar: {
+          title: pluginName,
+          url: repoUrl,
+          reset: true,
+          source: true,
+          fullscreen: true,
+          exampleSelect: true
+        },
+        examples: [
+          {
+            name: 'Basic',
+            id: 'basic',
+            init: Examples.basic,
+            sourceLink: repoUrl + '/docs/examples/basic.js'
+          }
+        ]
+      });
+    </script>
+  </body>
+</html>

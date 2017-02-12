@@ -1,0 +1,28 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "valid-jsdoc": 1,
+    "no-console": 0,
+    "no-unused-vars": 0,
+    "indent": [
+      2,
+      2
+    ],
+    "semi": [
+      2,
+      "always"
+    ]
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "globals": {
+    "describe": true,
+    "it": true
+  },
+  "extends": "eslint:recommended"
+}
