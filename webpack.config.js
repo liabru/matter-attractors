@@ -78,5 +78,13 @@ module.exports = {
     }),
     new webpack.BannerPlugin(banner),
     postBuildTasks
-  ]
+  ],
+  devServer: {
+    proxy: {
+      '/libs/bundle.js': {
+        target: 'http://localhost:8080/',
+        pathRewrite: { '^/libs/bundle\\.js' : '/libs/' + name + '.js' }
+      }
+    }
+  }
 };
