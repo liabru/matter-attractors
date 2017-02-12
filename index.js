@@ -10,7 +10,7 @@ const Matter = require('matter-js');
 const MatterAttractors = {
   // plugin meta
   name: 'matter-attractors', // PLUGIN_NAME
-  version: '0.1.1', // PLUGIN_VERSION
+  version: '0.1.4', // PLUGIN_VERSION
   for: 'matter-js@^0.12.0',
 
   // installs the plugin where `base` is `Matter`
