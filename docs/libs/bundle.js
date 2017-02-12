@@ -1,6 +1,6 @@
 /*!
- * matter-plugin-boilerplate 0.1.0 by Liam Brummitt 2017-02-11
- * https://github.com/liabru/matter-plugin-boilerplate
+ * matter-attractors 0.1.0 by Liam Brummitt 2017-02-12
+ * https://github.com/liabru/matter-attractors
  * License MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -9,9 +9,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["Matter"], factory);
 	else if(typeof exports === 'object')
-		exports["MatterPluginBoilerplate"] = factory(require("Matter"));
+		exports["MatterAttractors"] = factory(require("Matter"));
 	else
-		root["MatterPluginBoilerplate"] = factory(root["Matter"]);
+		root["MatterAttractors"] = factory(root["Matter"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -75,7 +75,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/demo";
+/******/ 	__webpack_require__.p = "/libs";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
@@ -97,12 +97,13 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 var Matter = __webpack_require__(0);
 
 /**
- * An example plugin for matter.js.
- * @module MatterPluginExample
+ * An attractors plugin for matter.js.
+ * See the readme for usage and examples.
+ * @module MatterAttractors
  */
-var MatterPluginExample = {
+var MatterAttractors = {
   // plugin meta
-  name: 'matter-plugin-boilerplate', // PLUGIN_NAME
+  name: 'matter-attractors', // PLUGIN_NAME
   version: '0.1.0', // PLUGIN_VERSION
   for: 'matter-js@^0.12.0',
 
@@ -110,25 +111,91 @@ var MatterPluginExample = {
   // you should not need to call this directly.
   install: function install(base) {
     base.after('Body.create', function () {
-      MatterPluginExample.Body.init(this);
+      MatterAttractors.Body.init(this);
+    });
+
+    base.before('Engine.update', function (engine) {
+      MatterAttractors.Engine.update(engine);
     });
   },
 
   Body: {
     /**
-     * Example function that removes friction every created body.
-     * @function MatterPluginExample.Body.init
+     * Initialises the `body` to support attractors.
+     * This is called automatically by the plugin.
+     * @function MatterAttractors.Body.init
      * @param {Matter.Body} body
      */
     init: function init(body) {
-      body.friction = 0;
+      body.plugin.attractors = body.plugin.attractors || [];
+    }
+  },
+
+  Engine: {
+    /**
+     * Applies all attractors for all bodies in the `engine`.
+     * This is called automatically by the plugin.
+     * @function MatterAttractors.Engine.update
+     * @param {Matter.Engine} engine
+     */
+    update: function update(engine) {
+      var world = engine.world,
+          bodies = Matter.Composite.allBodies(world);
+
+      for (var i = 0; i < bodies.length; i += 1) {
+        var bodyA = bodies[i],
+            attractors = bodyA.plugin.attractors;
+
+        if (attractors && attractors.length > 0) {
+          for (var j = i + 1; j < bodies.length; j += 1) {
+            var bodyB = bodies[j];
+
+            for (var k = 0; k < attractors.length; k += 1) {
+              var attractor = attractors[k],
+                  forceVector = attractor;
+
+              if (Matter.Common.isFunction(attractor)) {
+                forceVector = attractor(bodyA, bodyB);
+              }
+
+              if (forceVector) {
+                Matter.Body.applyForce(bodyB, bodyB.position, forceVector);
+              }
+            }
+          }
+        }
+      }
     }
   }
 };
 
-Matter.Plugin.register(MatterPluginExample);
+Matter.Plugin.register(MatterAttractors);
 
-module.exports = MatterPluginExample;
+module.exports = MatterAttractors;
+
+/**
+ * @namespace Matter.Body
+ * @see http://brm.io/matter-js/docs/classes/Body.html
+ */
+
+/**
+ * This plugin adds a new property `body.plugin.attractors` to instances of `Matter.Body`.  
+ * This is an array of callback functions that will be called automatically
+ * for every pair of bodies, on every engine update.
+ * @property {Function[]} body.plugin.attractors
+ * @memberof Matter.Body
+ */
+
+/**
+ * An attractor function calculates the force to be applied
+ * between two bodies, it should either:
+ * - return the force vector to be applied to `bodyB`
+ * - or apply the force to the body(s) itself
+ * @callback AttractorFunction
+ * @param {Matter.Body} bodyA
+ * @param {Matter.Body} bodyB
+ * @returns {Vector|undefined} a force vector (optional)
+ */
 
 /***/ })
 /******/ ]);

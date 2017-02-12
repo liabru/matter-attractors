@@ -2,14 +2,15 @@
 
 <!-- Start index.js -->
 
-## PluginExample
+## MatterAttractors
 
-An example plugin for matter.js.
+An attractors plugin for matter.js.
+See the readme for usage and examples.
 
-## PluginExample.Body.init(body)
+## MatterAttractors.Body.init(body)
 
-Example function that removes friction every created body.
-Automatically called by the plugin.
+Initialises the `body` to support attractors.
+This is called automatically by the plugin.
 
 ### Params:
 
@@ -19,9 +20,44 @@ Automatically called by the plugin.
 
 * No return value.
 
+## MatterAttractors.Engine.update(engine)
+
+Applies all attractors for all bodies in the `engine`.
+This is called automatically by the plugin.
+
+### Params:
+
+* **Matter.Engine** *engine* The engine to update.
+
+### Return:
+
+* No return value.
+
 ## Matter.Body
 
 See: http://brm.io/matter-js/docs/classes/Body.html
+
+This plugin adds a new property `body.plugin.attractors` to instances of `Matter.Body`.  
+This is an array of callback functions that will be called automatically
+for every pair of bodies, on every engine update.
+
+### Properties:
+
+* **Array.\<Function>** *body.plugin.attractors* 
+
+An attractor function calculates the force to be applied
+between two bodies, it should either:
+- return the force vector to be applied to `bodyB`
+- or apply the force to the body(s) itself
+
+### Params:
+
+* **Matter.Body** *bodyA* 
+* **Matter.Body** *bodyB* 
+
+### Return:
+
+* **Vector** a force vector (optional)
 
 <!-- End index.js -->
 

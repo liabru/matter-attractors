@@ -1,20 +1,20 @@
 {
-  "name": "matter-plugin-boilerplate",
-  "description": "A plugin boilerplate for matter.js",
+  "name": "matter-attractors",
+  "description": "An attractors plugin for matter.js",
   "version": "0.1.0",
-  "main": "build/matter-plugin-boilerplate.js",
+  "main": "build/matter-attractors.js",
   "license": "MIT",
-  "homepage": "https://github.com/liabru/matter-plugin-boilerplate",
+  "homepage": "https://github.com/liabru/matter-attractors",
   "author": "Liam Brummitt <liam@brm.io> (http://brm.io/)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/liabru/matter-plugin-boilerplate.git"
+    "url": "https://github.com/liabru/matter-attractors.git"
   },
   "keywords": [
     "matter-js",
     "plugin",
     "physics",
-    "boilerplate"
+    "attractors"
   ],
   "scripts": {
     "build": "webpack",

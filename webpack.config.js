@@ -20,7 +20,7 @@ var postBuildTasks = {
 
       // replace constants
       replace.sync({
-        files: ['index.js', 'docs/examples/*.js', 'docs/libs/index.html'],
+        files: ['index.js', 'docs/examples/*.js', 'docs/index.html'],
         replace: [
           /(['"])(.*)(['"][;,\s]*\/\/\s*PLUGIN_NAME)/g,
           /(['"])(.*)(['"][;,\s]*\/\/\s*PLUGIN_VERSION)/g,
