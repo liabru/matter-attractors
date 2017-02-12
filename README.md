@@ -12,7 +12,7 @@ See the [demo](http://liabru.github.io/matter-attractors).
 
 ## Install
 
-Get the [matter-attractors.js](dist/matter-attractors.js) file directly or get it via npm:
+Get the [matter-attractors.js](build/matter-attractors.js) file directly or get it via npm:
 
     npm install matter-attractors
 
@@ -49,7 +49,7 @@ var body = Matter.Bodies.circle(0, 0, 10, {
 
 ## Examples
 
-See the [examples](examples).
+See the [examples](docs/examples).
 
 ## Documentation
 
