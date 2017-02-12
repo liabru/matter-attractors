@@ -1,5 +1,5 @@
 /*!
- * matter-attractors 0.1.1 by Liam Brummitt 2017-02-12
+ * matter-attractors 0.1.3 by Liam Brummitt 2017-02-12
  * https://github.com/liabru/matter-attractors
  * License MIT
  */
@@ -104,7 +104,7 @@ var Matter = __webpack_require__(0);
 var MatterAttractors = {
   // plugin meta
   name: 'matter-attractors', // PLUGIN_NAME
-  version: '0.1.0', // PLUGIN_VERSION
+  version: '0.1.1', // PLUGIN_VERSION
   for: 'matter-js@^0.12.0',
 
   // installs the plugin where `base` is `Matter`
