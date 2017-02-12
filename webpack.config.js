@@ -20,7 +20,7 @@ var postBuildTasks = {
 
       // replace constants
       replace.sync({
-        files: ['index.js', 'docs/examples/*.js', 'docs/demo/index.html'],
+        files: ['index.js', 'docs/examples/*.js', 'docs/libs/index.html'],
         replace: [
           /(['"])(.*)(['"][;,\s]*\/\/\s*PLUGIN_NAME)/g,
           /(['"])(.*)(['"][;,\s]*\/\/\s*PLUGIN_VERSION)/g,
@@ -34,9 +34,9 @@ var postBuildTasks = {
       });
 
       // copy libs to demo
-      copySync(require.resolve('matter-js'), 'docs/demo/matter.js');
-      copySync(matterToolsPath, 'docs/demo/matter-tools.demo.js');
-      copySync('build/' + name + '.js', 'docs/demo/bundle.js');
+      copySync(require.resolve('matter-js'), 'docs/libs/matter.js');
+      copySync(matterToolsPath, 'docs/libs/matter-tools.demo.js');
+      copySync('build/' + name + '.js', 'docs/libs/bundle.js');
 
       // done
       callback();
@@ -57,7 +57,7 @@ module.exports = {
   output: {
     library: Case.pascal(name),
     path: './build',
-    publicPath: '/demo',
+    publicPath: '/libs',
     filename: '[name].js',
     libraryTarget: 'umd'
   },
