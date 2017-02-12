@@ -1,5 +1,5 @@
 /*!
- * matter-attractors 0.1.4 by Liam Brummitt 2017-02-12
+ * matter-attractors 0.1.5 by Liam Brummitt 2017-02-12
  * https://github.com/liabru/matter-attractors
  * License MIT
  */
@@ -104,7 +104,7 @@ var Matter = __webpack_require__(0);
 var MatterAttractors = {
   // plugin meta
   name: 'matter-attractors', // PLUGIN_NAME
-  version: '0.1.1', // PLUGIN_VERSION
+  version: '0.1.4', // PLUGIN_VERSION
   for: 'matter-js@^0.12.0',
 
   // installs the plugin where `base` is `Matter`
@@ -168,6 +168,39 @@ var MatterAttractors = {
         }
       }
     }
+  },
+
+  /**
+   * Defines some useful common attractor functions that can be used 
+   * by pushing them to your body's `body.plugin.attractors` array.
+   * @namespace MatterAttractors.Attractors
+   * @property {number} gravityConstant The gravitational constant used by the gravity attractor.
+   */
+  Attractors: {
+    gravityConstant: 0.001,
+
+    /**
+     * An attractor function that applies Newton's law of gravitation.
+     * Use this by pushing `MatterAttractors.Attractors.gravity` to your body's `body.plugin.attractors` array.
+     * The gravitational constant defaults to `0.001` which you can change 
+     * at `MatterAttractors.Attractors.gravityConstant`.
+     * @function MatterAttractors.Attractors.gravity
+     * @param {Matter.Body} bodyA The first body.
+     * @param {Matter.Body} bodyB The second body.
+     * @returns {void} No return value.
+     */
+    gravity: function gravity(bodyA, bodyB) {
+      // use Newton's law of gravitation
+      var bToA = Matter.Vector.sub(bodyB.position, bodyA.position),
+          distanceSq = Matter.Vector.magnitudeSquared(bToA) || 0.0001,
+          normal = Matter.Vector.normalise(bToA),
+          magnitude = -MatterAttractors.Attractors.gravityConstant * (bodyA.mass * bodyB.mass / distanceSq),
+          force = Matter.Vector.mult(normal, magnitude);
+
+      // to apply forces to both bodies
+      Matter.Body.applyForce(bodyA, bodyA.position, Matter.Vector.neg(force));
+      Matter.Body.applyForce(bodyB, bodyB.position, force);
+    }
   }
 };
 
@@ -190,7 +223,7 @@ module.exports = MatterAttractors;
 
 /**
  * An attractor function calculates the force to be applied
- * between two bodies, it should either:
+ * to `bodyB`, it should either:
  * - return the force vector to be applied to `bodyB`
  * - or apply the force to the body(s) itself
  * @callback AttractorFunction

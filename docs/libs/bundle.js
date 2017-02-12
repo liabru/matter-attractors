@@ -1,5 +1,5 @@
 /*!
- * matter-attractors 0.1.4 by Liam Brummitt 2017-02-12
+ * matter-attractors 0.1.5 by Liam Brummitt 2017-02-12
  * https://github.com/liabru/matter-attractors
  * License MIT
  */

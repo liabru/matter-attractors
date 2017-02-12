@@ -71,7 +71,7 @@ for every pair of bodies, on every engine update.
 * **Array.\<Function>** *body.plugin.attractors* 
 
 An attractor function calculates the force to be applied
-between two bodies, it should either:
+to `bodyB`, it should either:
 - return the force vector to be applied to `bodyB`
 - or apply the force to the body(s) itself
 
