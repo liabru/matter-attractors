@@ -129,7 +129,7 @@ module.exports = MatterAttractors;
 
 /**
  * An attractor function calculates the force to be applied
- * between two bodies, it should either:
+ * to `bodyB`, it should either:
  * - return the force vector to be applied to `bodyB`
  * - or apply the force to the body(s) itself
  * @callback AttractorFunction
