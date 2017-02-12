@@ -1,5 +1,5 @@
 /*!
- * matter-attractors 0.1.0 by Liam Brummitt 2017-02-12
+ * matter-attractors 0.1.1 by Liam Brummitt 2017-02-12
  * https://github.com/liabru/matter-attractors
  * License MIT
  */
@@ -124,7 +124,8 @@ var MatterAttractors = {
      * Initialises the `body` to support attractors.
      * This is called automatically by the plugin.
      * @function MatterAttractors.Body.init
-     * @param {Matter.Body} body
+     * @param {Matter.Body} body The body to init.
+     * @returns {void} No return value.
      */
     init: function init(body) {
       body.plugin.attractors = body.plugin.attractors || [];
@@ -136,7 +137,8 @@ var MatterAttractors = {
      * Applies all attractors for all bodies in the `engine`.
      * This is called automatically by the plugin.
      * @function MatterAttractors.Engine.update
-     * @param {Matter.Engine} engine
+     * @param {Matter.Engine} engine The engine to update.
+     * @returns {void} No return value.
      */
     update: function update(engine) {
       var world = engine.world,
