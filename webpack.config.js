@@ -35,6 +35,7 @@ var postBuildTasks = {
 
       // copy libs to demo
       copySync(require.resolve('matter-js'), 'docs/libs/matter.js');
+      copySync(require.resolve('matter-wrap'), 'docs/libs/matter-wrap.js');
       copySync(matterToolsPath, 'docs/libs/matter-tools.demo.js');
       copySync('build/' + name + '.js', 'docs/libs/bundle.js');
 

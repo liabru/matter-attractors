@@ -1,6 +1,6 @@
 /*!
- * matter-attractors 0.1.4 by Liam Brummitt 2017-02-12
- * https://github.com/liabru/matter-attractors
+ * matter-wrap 0.1.2 by Liam Brummitt 2017-02-12
+ * https://github.com/liabru/matter-wrap
  * License MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -9,9 +9,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["Matter"], factory);
 	else if(typeof exports === 'object')
-		exports["MatterAttractors"] = factory(require("Matter"));
+		exports["MatterWrap"] = factory(require("Matter"));
 	else
-		root["MatterAttractors"] = factory(root["Matter"]);
+		root["MatterWrap"] = factory(root["Matter"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -97,46 +97,29 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
 var Matter = __webpack_require__(0);
 
 /**
- * An attractors plugin for matter.js.
+ * A coordinate wrapping plugin for matter.js.
  * See the readme for usage and examples.
- * @module MatterAttractors
+ * @module MatterWrap
  */
-var MatterAttractors = {
+var MatterWrap = {
   // plugin meta
-  name: 'matter-attractors', // PLUGIN_NAME
-  version: '0.1.4', // PLUGIN_VERSION
+  name: 'matter-wrap', // PLUGIN_NAME
+  version: '0.1.0', // PLUGIN_VERSION
   for: 'matter-js@^0.12.0',
 
   // installs the plugin where `base` is `Matter`
   // you should not need to call this directly.
   install: function install(base) {
-    base.after('Body.create', function () {
-      MatterAttractors.Body.init(this);
+    base.after('Engine.update', function () {
+      MatterWrap.Engine.update(this);
     });
-
-    base.before('Engine.update', function (engine) {
-      MatterAttractors.Engine.update(engine);
-    });
-  },
-
-  Body: {
-    /**
-     * Initialises the `body` to support attractors.
-     * This is called automatically by the plugin.
-     * @function MatterAttractors.Body.init
-     * @param {Matter.Body} body The body to init.
-     * @returns {void} No return value.
-     */
-    init: function init(body) {
-      body.plugin.attractors = body.plugin.attractors || [];
-    }
   },
 
   Engine: {
     /**
-     * Applies all attractors for all bodies in the `engine`.
+     * Updates the engine by wrapping bodies inside `engine.world`.
      * This is called automatically by the plugin.
-     * @function MatterAttractors.Engine.update
+     * @function MatterWrap.Engine.update
      * @param {Matter.Engine} engine The engine to update.
      * @returns {void} No return value.
      */
@@ -145,68 +128,59 @@ var MatterAttractors = {
           bodies = Matter.Composite.allBodies(world);
 
       for (var i = 0; i < bodies.length; i += 1) {
-        var bodyA = bodies[i],
-            attractors = bodyA.plugin.attractors;
+        var body = bodies[i];
 
-        if (attractors && attractors.length > 0) {
-          for (var j = i + 1; j < bodies.length; j += 1) {
-            var bodyB = bodies[j];
-
-            for (var k = 0; k < attractors.length; k += 1) {
-              var attractor = attractors[k],
-                  forceVector = attractor;
-
-              if (Matter.Common.isFunction(attractor)) {
-                forceVector = attractor(bodyA, bodyB);
-              }
-
-              if (forceVector) {
-                Matter.Body.applyForce(bodyB, bodyB.position, forceVector);
-              }
-            }
-          }
+        if (body.plugin.wrap) {
+          MatterWrap.Body.wrap(body, body.plugin.wrap);
         }
       }
     }
   },
 
-  /**
-   * Defines some useful common attractor functions that can be used 
-   * by pushing them to your body's `body.plugin.attractors` array.
-   * @namespace MatterAttractors.Attractors
-   * @property {number} gravityConstant The gravitational constant used by the gravity attractor.
-   */
-  Attractors: {
-    gravityConstant: 0.001,
-
+  Body: {
     /**
-     * An attractor function that applies Newton's law of gravitation.
-     * Use this by pushing `MatterAttractors.Attractors.gravity` to your body's `body.plugin.attractors` array.
-     * The gravitational constant defaults to `0.001` which you can change 
-     * at `MatterAttractors.Attractors.gravityConstant`.
-     * @function MatterAttractors.Attractors.gravity
-     * @param {Matter.Body} bodyA The first body.
-     * @param {Matter.Body} bodyB The second body.
+     * Wraps the `body` position such that it always stay within the given bounds. 
+     * Upon crossing a boundary the body will appear on the opposite side of the bounds, 
+     * while maintaining its velocity.
+     * This is called automatically by the plugin.
+     * @function MatterAttractors.Body.wrap
+     * @param {Matter.Body} body The body to wrap.
+     * @param {Matter.Bounds} bounds The bounds to wrap the body inside.
      * @returns {void} No return value.
      */
-    gravity: function gravity(bodyA, bodyB) {
-      // use Newton's law of gravitation
-      var bToA = Matter.Vector.sub(bodyB.position, bodyA.position),
-          distanceSq = Matter.Vector.magnitudeSquared(bToA) || 0.0001,
-          normal = Matter.Vector.normalise(bToA),
-          magnitude = -MatterAttractors.Attractors.gravityConstant * (bodyA.mass * bodyB.mass / distanceSq),
-          force = Matter.Vector.mult(normal, magnitude);
+    wrap: function wrap(body, bounds) {
+      var x = null,
+          y = null;
 
-      // to apply forces to both bodies
-      Matter.Body.applyForce(bodyA, bodyA.position, Matter.Vector.neg(force));
-      Matter.Body.applyForce(bodyB, bodyB.position, force);
+      if (typeof bounds.min.x !== 'undefined' && typeof bounds.max.x !== 'undefined') {
+        if (body.bounds.min.x > bounds.max.x) {
+          x = bounds.min.x - (body.bounds.max.x - body.position.x);
+        } else if (body.bounds.max.x < bounds.min.x) {
+          x = bounds.max.x - (body.bounds.min.x - body.position.x);
+        }
+      }
+
+      if (typeof bounds.min.y !== 'undefined' && typeof bounds.max.y !== 'undefined') {
+        if (body.bounds.min.y > bounds.max.y) {
+          y = bounds.min.y - (body.bounds.max.y - body.position.y);
+        } else if (body.bounds.max.y < bounds.min.y) {
+          y = bounds.max.y - (body.bounds.min.y - body.position.y);
+        }
+      }
+
+      if (x !== null || y !== null) {
+        Matter.Body.setPosition(body, {
+          x: x || body.position.x,
+          y: y || body.position.y
+        });
+      }
     }
   }
 };
 
-Matter.Plugin.register(MatterAttractors);
+Matter.Plugin.register(MatterWrap);
 
-module.exports = MatterAttractors;
+module.exports = MatterWrap;
 
 /**
  * @namespace Matter.Body
@@ -214,22 +188,10 @@ module.exports = MatterAttractors;
  */
 
 /**
- * This plugin adds a new property `body.plugin.attractors` to instances of `Matter.Body`.  
- * This is an array of callback functions that will be called automatically
- * for every pair of bodies, on every engine update.
- * @property {Function[]} body.plugin.attractors
+ * This plugin adds a new property `body.plugin.wrap` to instances of `Matter.Body`.  
+ * This is a `Matter.Bounds` instance that specifies the wrapping region.
+ * @property {Matter.Bounds} body.plugin.wrap
  * @memberof Matter.Body
- */
-
-/**
- * An attractor function calculates the force to be applied
- * to `bodyB`, it should either:
- * - return the force vector to be applied to `bodyB`
- * - or apply the force to the body(s) itself
- * @callback AttractorFunction
- * @param {Matter.Body} bodyA
- * @param {Matter.Body} bodyB
- * @returns {Vector|undefined} a force vector (optional)
  */
 
 /***/ })

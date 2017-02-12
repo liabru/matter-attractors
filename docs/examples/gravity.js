@@ -1,5 +1,6 @@
 // install plugin
 Matter.use(
+  'matter-wrap', // not required, just for demo
   'matter-attractors' // PLUGIN_NAME
 );
 
@@ -26,8 +27,7 @@ Example.gravity = function() {
     engine: engine,
     options: {
       width: Math.min(document.documentElement.clientWidth, 1024),
-      height: Math.min(document.documentElement.clientHeight, 1024),
-      wireframes: false
+      height: Math.min(document.documentElement.clientHeight, 1024)
     }
   });
 
@@ -58,7 +58,11 @@ Example.gravity = function() {
             // there is a built in helper function for Newtonian gravity!
             // you can find out how it works in index.js
             MatterAttractors.Attractors.gravity
-          ]
+          ],
+          wrap: {
+            min: { x: 0, y: 0 },
+            max: { x: render.options.width, y: render.options.height }
+          }
         }
       }
     );
@@ -89,12 +93,6 @@ Example.gravity = function() {
 
   // keep the mouse in sync with rendering
   render.mouse = mouse;
-
-  // fit the render viewport to the scene
-  Render.lookAt(render, {
-    min: { x: 0, y: 0 },
-    max: { x: 800, y: 600 }
-  });
 
   // context for MatterTools.Demo
   return {

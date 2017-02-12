@@ -2172,6 +2172,10 @@ matter-tools@^0.10.0:
     keymaster "^1.6.2"
     matter-js "^0.12.0"
 
+matter-wrap:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/matter-wrap/-/matter-wrap-0.1.2.tgz#3e48e69727cce8466dbd739d458686a18507756a"
+
 mdurl@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
