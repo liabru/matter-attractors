@@ -74,6 +74,39 @@ const MatterAttractors = {
         }
       }
     }
+  },
+  
+  /**
+   * Defines some useful common attractor functions that can be used 
+   * by pushing them to your body's `body.plugin.attractors` array.
+   * @namespace MatterAttractors.Attractors
+   * @property {number} gravityConstant The gravitational constant used by the gravity attractor.
+   */
+  Attractors: {
+    gravityConstant: 0.001,
+
+    /**
+     * An attractor function that applies Newton's law of gravitation.
+     * Use this by pushing `MatterAttractors.Attractors.gravity` to your body's `body.plugin.attractors` array.
+     * The gravitational constant defaults to `0.001` which you can change 
+     * at `MatterAttractors.Attractors.gravityConstant`.
+     * @function MatterAttractors.Attractors.gravity
+     * @param {Matter.Body} bodyA The first body.
+     * @param {Matter.Body} bodyB The second body.
+     * @returns {void} No return value.
+     */
+    gravity: function(bodyA, bodyB) {
+      // use Newton's law of gravitation
+      var bToA = Matter.Vector.sub(bodyB.position, bodyA.position),
+        distanceSq = Matter.Vector.magnitudeSquared(bToA) || 0.0001,
+        normal = Matter.Vector.normalise(bToA),
+        magnitude = -MatterAttractors.Attractors.gravityConstant * (bodyA.mass * bodyB.mass / distanceSq),
+        force = Matter.Vector.mult(normal, magnitude);
+
+      // to apply forces to both bodies
+      Matter.Body.applyForce(bodyA, bodyA.position, Matter.Vector.neg(force));
+      Matter.Body.applyForce(bodyB, bodyB.position, force);
+    }
   }
 };
 

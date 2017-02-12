@@ -57,4 +57,24 @@ describe(MatterAttractors.name, function() {
     expect(attractedBody.velocity.x).to.be.above(0);
     expect(attractedBody.velocity.y).to.be.above(0);
   });
+
+  it('applies gravity attractor correctly', function() {
+    let attractorBody = Matter.Bodies.circle(0, 0, 10, {
+      plugin: {
+        attractors: [
+          MatterAttractors.Attractors.gravity
+        ]
+      }
+    });
+
+    let attractedBody = Matter.Bodies.circle(-20, -20, 10),
+      engine = Matter.Engine.create();
+
+    engine.world.gravity.scale = 0;
+    Matter.World.add(engine.world, [attractorBody, attractedBody]);
+    Matter.Engine.update(engine);
+
+    expect(attractedBody.velocity.x).to.be.above(0);
+    expect(attractedBody.velocity.y).to.be.above(0);
+  });
 });

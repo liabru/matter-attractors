@@ -33,6 +33,31 @@ This is called automatically by the plugin.
 
 * No return value.
 
+## MatterAttractors.Attractors
+
+Defines some useful common attractor functions that can be used 
+by pushing them to your body's `body.plugin.attractors` array.
+
+### Properties:
+
+* **number** *gravityConstant* The gravitational constant used by the gravity attractor.
+
+## MatterAttractors.Attractors.gravity(bodyA, bodyB)
+
+An attractor function that applies Newton's law of gravitation.
+Use this by pushing `MatterAttractors.Attractors.gravity` to your body's `body.plugin.attractors` array.
+The gravitational constant defaults to `0.001` which you can change 
+at `MatterAttractors.Attractors.gravityConstant`.
+
+### Params:
+
+* **Matter.Body** *bodyA* The first body.
+* **Matter.Body** *bodyB* The second body.
+
+### Return:
+
+* No return value.
+
 ## Matter.Body
 
 See: http://brm.io/matter-js/docs/classes/Body.html
