@@ -3,9 +3,9 @@ Matter.use(
   'matter-attractors' // PLUGIN_NAME
 );
 
-var Examples = Examples || {};
+var Example = Example || {};
 
-Examples.basic = function() {
+Example.basic = function() {
   // module aliases
   var Engine = Matter.Engine,
       Events = Matter.Events,

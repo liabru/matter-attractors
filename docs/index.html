@@ -7,6 +7,7 @@
     <script src="./libs/matter-tools.demo.js"></script>
     <script src="./libs/bundle.js"></script>
     <script src="./examples/basic.js"></script>
+    <script src="./examples/gravity.js"></script>
     <style type="text/css">
       * {
         box-sizing: border-box;
@@ -40,8 +41,14 @@
           {
             name: 'Basic',
             id: 'basic',
-            init: Examples.basic,
-            sourceLink: repoUrl + '/docs/examples/basic.js'
+            init: Example.basic,
+            sourceLink: repoUrl + '/blob/master/docs/examples/basic.js'
+          },
+          {
+            name: 'Gravity',
+            id: 'gravity',
+            init: Example.gravity,
+            sourceLink: repoUrl + '/blob/master/docs/examples/gravity.js'
           }
         ]
       });
