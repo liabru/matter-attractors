@@ -24,9 +24,8 @@
     "doc": "markdox *.js -o API.md",
     "release": "npm version minor -m 'release %s' && npm publish",
     "release-patch": "npm version patch -m 'release %s' && npm publish",
-    "preversion": "npm run lint",
-    "version": "npm run doc && git add -A build docs API.md",
-    "postversion": "npm run build && git push && git push --tags"
+    "preversion": "npm run lint && npm run test",
+    "postversion": "npm run build && npm run doc && git add -A build docs API.md && git push && git push --tags"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
