@@ -1,17 +1,17 @@
 /*!
- * matter-attractors 0.1.5 by Liam Brummitt 2017-02-12
+ * matter-attractors 0.1.5 by Liam Brummitt 2017-05-11
  * https://github.com/liabru/matter-attractors
  * License MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("Matter"));
+		module.exports = factory(require("matter-js"));
 	else if(typeof define === 'function' && define.amd)
-		define(["Matter"], factory);
+		define(["matter-js"], factory);
 	else if(typeof exports === 'object')
-		exports["MatterAttractors"] = factory(require("Matter"));
+		exports["MatterAttractors"] = factory(require("matter-js"));
 	else
-		root["MatterAttractors"] = factory(root["Matter"]);
+		root["MatterAttractors"] = factory(root["matter-js"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -104,7 +104,7 @@ var Matter = __webpack_require__(0);
 var MatterAttractors = {
   // plugin meta
   name: 'matter-attractors', // PLUGIN_NAME
-  version: '0.1.4', // PLUGIN_VERSION
+  version: '0.1.5', // PLUGIN_VERSION
   for: 'matter-js@^0.12.0',
 
   // installs the plugin where `base` is `Matter`

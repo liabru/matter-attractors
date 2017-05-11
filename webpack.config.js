@@ -62,9 +62,9 @@ module.exports = {
     filename: '[name].js',
     libraryTarget: 'umd'
   },
-  externals: {
-    'matter-js': 'Matter'
-  },
+  externals: [
+    'matter-js'
+  ],
   module: {
     loaders: [{
       test: /\.js$/,
