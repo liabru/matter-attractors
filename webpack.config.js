@@ -63,7 +63,12 @@ module.exports = {
     libraryTarget: 'umd'
   },
   externals: {
-    'matter-js': 'Matter'
+    'matter-js': {
+      commonjs: 'matter-js',
+      commonjs2: 'matter-js',
+      amd: 'matter-js',
+      root: 'Matter'
+    }
   },
   module: {
     loaders: [{
