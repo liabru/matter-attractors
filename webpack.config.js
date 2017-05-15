@@ -57,7 +57,7 @@ module.exports = {
   },
   output: {
     library: Case.pascal(name),
-    path: './build',
+    path: path.resolve(__dirname, './build'),
     publicPath: '/libs',
     filename: '[name].js',
     libraryTarget: 'umd'
