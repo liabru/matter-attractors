@@ -1,7 +1,7 @@
 {
   "name": "matter-attractors",
   "description": "An attractors plugin for matter.js",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "build/matter-attractors.js",
   "license": "MIT",
   "homepage": "https://github.com/liabru/matter-attractors",

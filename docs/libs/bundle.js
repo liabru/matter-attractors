@@ -1,15 +1,15 @@
 /*!
- * matter-attractors 0.1.5 by Liam Brummitt 2017-02-12
+ * matter-attractors 0.1.6 by Liam Brummitt 2017-05-15
  * https://github.com/liabru/matter-attractors
  * License MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("Matter"));
+		module.exports = factory(require("matter-js"));
 	else if(typeof define === 'function' && define.amd)
-		define(["Matter"], factory);
+		define(["matter-js"], factory);
 	else if(typeof exports === 'object')
-		exports["MatterAttractors"] = factory(require("Matter"));
+		exports["MatterAttractors"] = factory(require("matter-js"));
 	else
 		root["MatterAttractors"] = factory(root["Matter"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_0__) {
