@@ -55,8 +55,12 @@ const MatterAttractors = {
           attractors = bodyA.plugin.attractors;
 
         if (attractors && attractors.length > 0) {
-          for (let j = i + 1; j < bodies.length; j += 1) {
-            let bodyB = bodies[j];
+          for (let j = 0; j < bodies.length; j += 1) {
+            if (j === i) {
+              continue;
+            }
+
+						let bodyB = bodies[j];
 
             for (let k = 0; k < attractors.length; k += 1) {
               let attractor = attractors[k],
